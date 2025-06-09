@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+
+  --form-shadow: 
+  --color-main: #000;
+}
+
+@layer base {
+  * {
+    font-family: var(--font-inter);
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+}
