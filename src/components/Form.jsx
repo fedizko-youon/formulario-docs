@@ -14,138 +14,179 @@ const Form = () => {
 
     const currentPageData = data[indexPage];
     const { id, pergunta, options, placeholder, type, inputType } = currentPageData;
-    const resposta = {
-        id,
-        pergunta,
-        resposta: inputValue || selectedFile || selectedValue
+
+    const saveResponse = () => {
+        const value =
+            inputValue ||
+            selectedFile ||
+            (selectedValue !== "default" ? selectedValue : "");
+
+        if (!value) return;
+
+        const newResponse = {
+            id,
+            pergunta,
+            resposta: value,
+        };
+
+        setResponses(prev => {
+            const filtered = prev.filter(resp => resp.id !== id);
+            return [...filtered, newResponse];
+        });
+    };
+
+    const loadPreviousResponse = (index) => {
+        const previous = data[index];
+        const savedResponse = responses.find(r => r.id === previous.id);
+        if (!savedResponse) return;
+
+        const value = savedResponse.resposta;
+
+        if (previous.type === "select") {
+            setSelectedValue(value);
+        } else if (previous.type === "input") {
+            if (previous.inputType === "radio") {
+                setInputValue(value);
+            } else if (previous.inputType === "file") {
+                setSelectedFile(value);
+            } else {
+                setInputValue(value);
+            }
+        } else if (previous.type === "textarea") {
+            setInputValue(value);
+        }
     };
 
     const handleChange = (e) => {
         setInputValue(e.target.value);
-    }
+    };
 
     const handleChangeSelected = (e) => {
         setSelectedValue(e.target.value);
-    }
+    };
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setSelectedFile(file);
-    }
+    };
 
-    const handleNext = () => { // usar useNavigate quando for a última página
-        setIndexPage(indexPage + 1);
+    const handleNext = () => {
+        saveResponse();
 
-        console.log(resposta);
-        if (!resposta.resposta || resposta.resposta === "default") {
-            console.log("ela não existe")
-            setResponses(prevResponses => {
-                const filteredResponses = prevResponses.filter(prevResponse => prevResponse.id !== id);
-                return [...filteredResponses, resposta];
-            });
-            console.log("Caso não exista:", responses);
-        } else {
-            setResponses(prevResponses => [...prevResponses, resposta]);
-            console.log("Caso exista:", responses);
-        }
-        setInputValue(resposta.resposta || "");
-        setSelectedFile(resposta.resposta || null);
-        setSelectedValue(resposta.resposta || "default");
-    }
+        const nextIndex = indexPage + 1;
+        setIndexPage(nextIndex);
+
+        // Reset inputs
+        setInputValue("");
+        setSelectedFile(null);
+        setSelectedValue("default");
+
+        // Pré-carrega valor se já respondeu antes
+        setTimeout(() => loadPreviousResponse(nextIndex), 0);
+    };
 
     const handlePrev = () => {
-        setIndexPage(indexPage - 1);
+        saveResponse();
 
-        const prevResponse = responses[indexPage - 1];
-        const { resposta } = prevResponse;
-        switch (type) {
-            case "select":
-                setSelectedValue(resposta);
-                break;
-            case "input" || "textarea":
-                if (inputType === "radio") {
-                    setSelectedValue(resposta);
-                } else if (inputType === "file") {
-                    setSelectedFile(resposta);
-                } else {
-                    setInputValue(resposta);
-                }
-                break;
-            default:
-                break;
-        }
-    }
+        const prevIndex = indexPage - 1;
+        setIndexPage(prevIndex);
+
+        // Pré-carrega valor se já respondeu antes
+        setTimeout(() => loadPreviousResponse(prevIndex), 0);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        saveResponse(); // garante que última resposta está salva
         console.log(responses);
-    }
+        // Aqui você pode enviar as respostas ao backend, etc.
+    };
 
     const renderCurrentPage = () => {
         switch (type) {
             case "select":
-                return <Select pergunta={pergunta} options={options} value={selectedValue} onChange={handleChangeSelected} />
+                return (
+                    <Select
+                        pergunta={pergunta}
+                        options={options}
+                        value={selectedValue}
+                        onChange={handleChangeSelected}
+                    />
+                );
 
             case "input":
                 if (inputType === "radio") {
-                    return <Input
-                        type={inputType}
-                        text={pergunta}
-                        id={id}
-                        placeholder={placeholder}
-                        options={options}
-                        value={inputValue}
-                        onChange={handleChange}
-                    />
+                    return (
+                        <Input
+                            type={inputType}
+                            text={pergunta}
+                            id={id}
+                            placeholder={placeholder}
+                            options={options}
+                            value={inputValue}
+                            onChange={handleChange}
+                        />
+                    );
                 } else if (inputType === "file") {
-                    return <Input 
-                        type={inputType}
-                        text={pergunta}
-                        id={id}
-                        value={selectedFile}
-                        onChange={handleFileChange}
-                    />
+                    return (
+                        <Input
+                            type={inputType}
+                            text={pergunta}
+                            id={id}
+                            value={selectedFile}
+                            onChange={handleFileChange}
+                        />
+                    );
                 } else {
-                    return <Input
-                        type={inputType}
+                    return (
+                        <Input
+                            type={inputType}
+                            text={pergunta}
+                            id={id}
+                            placeholder={placeholder}
+                            value={inputValue}
+                            onChange={handleChange}
+                        />
+                    );
+                }
+
+            case "textarea":
+                return (
+                    <Textarea
                         text={pergunta}
                         id={id}
                         placeholder={placeholder}
                         value={inputValue}
                         onChange={handleChange}
                     />
-                }
-            case "textarea":
-                return <Textarea 
-                    text={pergunta}
-                    id={id}
-                    placeholder={placeholder}
-                    value={inputValue}
-                    onChange={handleChange}
-                />
+                );
+
+            default:
+                return null;
         }
-    }
+    };
 
     return (
         <form className="shadow-xl bg-white p-4 rounded-lg flex w-1/2 flex-col gap-4">
-
             {renderCurrentPage()}
 
             <div className="flex justify-between gap-4">
-                {indexPage === (data.length - 1) ?
+                {indexPage === data.length - 1 ? (
                     <>
                         <Button text="Voltar" type="button" onClick={handlePrev} />
                         <Button text="Enviar" type="button" onClick={handleSubmit} />
                     </>
-                    :
+                ) : (
                     <>
-                        {indexPage > 0 && <Button text="Voltar" type="button" onClick={handlePrev} />}
+                        {indexPage > 0 && (
+                            <Button text="Voltar" type="button" onClick={handlePrev} />
+                        )}
                         <Button text="Próximo" type="button" onClick={handleNext} />
                     </>
-                }
+                )}
             </div>
         </form>
     );
-}
+};
 
 export default Form;
