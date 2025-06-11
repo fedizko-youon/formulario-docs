@@ -17,9 +17,11 @@ const Form = () => {
 
     const saveResponse = () => {
         const value =
-            inputValue ||
-            selectedFile ||
-            (selectedValue !== "default" ? selectedValue : "");
+            inputType === "file"
+                ? selectedFile
+                : inputType === "radio"
+                ? inputValue
+                : inputValue || (selectedValue !== "default" && selectedValue);
 
         if (!value) return;
 
@@ -72,34 +74,25 @@ const Form = () => {
 
     const handleNext = () => {
         saveResponse();
-
         const nextIndex = indexPage + 1;
         setIndexPage(nextIndex);
-
-        // Reset inputs
         setInputValue("");
         setSelectedFile(null);
         setSelectedValue("default");
-
-        // Pré-carrega valor se já respondeu antes
         setTimeout(() => loadPreviousResponse(nextIndex), 0);
     };
 
     const handlePrev = () => {
         saveResponse();
-
         const prevIndex = indexPage - 1;
         setIndexPage(prevIndex);
-
-        // Pré-carrega valor se já respondeu antes
         setTimeout(() => loadPreviousResponse(prevIndex), 0);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        saveResponse(); // garante que última resposta está salva
-        console.log(responses);
-        // Aqui você pode enviar as respostas ao backend, etc.
+        saveResponse();
+        console.log(responses); // enviar para backend aqui, se necessário
     };
 
     const renderCurrentPage = () => {
@@ -118,10 +111,9 @@ const Form = () => {
                 if (inputType === "radio") {
                     return (
                         <Input
-                            type={inputType}
+                            type="radio"
                             text={pergunta}
                             id={id}
-                            placeholder={placeholder}
                             options={options}
                             value={inputValue}
                             onChange={handleChange}
@@ -130,7 +122,7 @@ const Form = () => {
                 } else if (inputType === "file") {
                     return (
                         <Input
-                            type={inputType}
+                            type="file"
                             text={pergunta}
                             id={id}
                             value={selectedFile}
