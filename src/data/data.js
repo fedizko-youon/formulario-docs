@@ -1,7 +1,20 @@
 export const data = [
     {
+        id: 5,
+        pergunta: "Tipo de operação:",
+        options: [
+            "Criação",
+            "Atualização",
+            "Descontinuação"
+        ],
+        placeholder: "",
+        type: "select",
+        inputType: "",
+        required: true
+    },
+    {
         id: 1,
-        pergunta: "Qual o tipo de documento que estamos tratando?",
+        pergunta: "Qual o tipo de documento que estamos tratando?", // Criar pergunta "quem está criando esse documento?"
         options: [
             "DOCUMENTO OFICIAL",
             "DOCUMENTO EXTERNO",
@@ -12,7 +25,7 @@ export const data = [
         placeholder: "",
         type: "select",
         inputType: "",
-        respostaUsuario: ""
+        required: true
     },
     {
         id: 2,
@@ -29,7 +42,7 @@ export const data = [
         placeholder: "",
         type: "select",
         inputType: "",
-        respostaUsuario: ""
+        required: true
     },
     {
         id: 3,
@@ -50,7 +63,7 @@ export const data = [
         placeholder: "",
         type: "select",
         inputType: "",
-        respostaUsuario: ""
+        required: true
     },
     {
         id: 4,
@@ -71,23 +84,28 @@ export const data = [
         placeholder: "",
         type: "select",
         inputType: "",
-        respostaUsuario: ""
-    },
-    {
-        id: 5,
-        pergunta: "Tipo de operação:",
-        options: [
-            "Criação",
-            "Atualização",
-            "Descontinuação"
-        ],
-        placeholder: "",
-        type: "select",
-        inputType: "",
-        respostaUsuario: ""
+        required: true
     },
     {
         id: 6,
+        pergunta: "Qual era a sigla do último documento?:",
+        options: [],
+        placeholder: 'Ex: "IT_TI_COM_01"',
+        type: "input",
+        inputType: "text",
+        required: true
+    },
+    {
+        id: 7,
+        pergunta: "Qual é o objetivo dessa documentação?",
+        options: [],
+        placeholder: "Descreva o objetivo dessa documentação...",
+        type: "textarea",
+        inputType: "",
+        required: true
+    },
+    {
+        id: 8,
         pergunta: "O documento é para o Chile?",
         options: [
             "Sim",
@@ -96,13 +114,13 @@ export const data = [
         placeholder: "",
         type: "input",
         inputType: "radio",
-        respostaUsuario: ""
+        required: true
     },
     {
-        id: 7,
-        pergunta: "Destinatários:",
+        id: 9,
+        pergunta: "Selecione um ou mais destinatários:",
         options: [
-            "Todas as áreas",
+            "Todos os departamentos",
             "Recursos Humanos",
             "Sistema de Gestão de Qualidade",
             "Compras",
@@ -116,44 +134,35 @@ export const data = [
             "Tecnologia da Informação"
         ],
         placeholder: "",
-        type: "select",
-        inputType: "",
-        respostaUsuario: ""
-    },
-    {
-        id: 8,
-        pergunta: "Crie um fluxograma do passo a passo de toda a operação que será realizada:",
-        options: [],
-        placeholder: 'Insira o link do site de Fluxograma (ex: "https://lucidchart.com") aqui...',
         type: "input",
-        inputType: "text",
-        respostaUsuario: ""
+        inputType: "checkbox",
+        required: false
     },
     {
-        id: 9,
-        pergunta: "Insira o arquivo do fluxograma da operação:",
-        options: [],
-        placeholder: "",
-        type: "input",
-        inputType: "file",
-        respostaUsuario: ""
-    },
-    {
-        id: 10,
+        id: 11,
         pergunta: "Se houver, adicione todos os links dos arquivos necessários para o entendimento do documento:",
         options: [],
         placeholder: "Insira seus links aqui...",
         type: "textarea",
         inputType: "",
-        respostaUsuario: ""
+        required: false
     },
     {
-        id: 11,
-        pergunta: "Descrição passo a passo da atividade:",
+        id: 12,
+        pergunta: "Descreva passo a passo para as atividades do documento:",
         options: [],
-        placeholder: "Descreva passo a passo para as atividades do documento...",
+        placeholder: "Descrição passo a passo da atividade...",
         type: "textarea",
         inputType: "",
-        respostaUsuario: ""
+        required: false
+    },
+    {
+        id: 13,
+        pergunta: "Dê um título para o documento:",
+        options: [],
+        placeholder: "Digite o título...",
+        type: "input",
+        inputType: "text",
+        required: true
     }
-]
+];

@@ -1,11 +1,20 @@
+import { useState } from "react";
 import Form from "../components/Form";
+import FinalStep from "../components/FinalStep";
 
 const FormPage = () => {    
-    return (
-        <main className="flex-1 flex flex-col gap-4 p-14 items-center justify-center bg-gray-200">
-            <h1 className="text-4xl">Formulário de Documentação</h1>
+    const [isFinalStep, setIsFinalStep] = useState(false);
+    const [responses, setResponses] = useState([]);
 
-            <Form />
+    if (isFinalStep) {
+        return <FinalStep responses={responses} />
+    }
+
+    return (
+        <main className="main-container">
+            <h1 className="text-4xl text-center lg:text-start">Formulário de Documentação</h1>
+
+            <Form setIsFinalStep={setIsFinalStep} responses={responses} setResponses={setResponses} />
         </main>
     );
 }
