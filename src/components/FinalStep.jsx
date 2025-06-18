@@ -90,6 +90,8 @@ const FinalStep = ({ responses }) => {
               className="w-full h-32 flex justify-center items-center border cursor-pointer hover:text-blue-600 transition"
               onClick={handleDownload}
               title="Clique para baixar o documento Word"
+              tabIndex="0"
+              aria-label="Botão de download da documentação iso em arquivo word"
             >
               <FaRegFileWord size={48} />
             </div>
