@@ -93,7 +93,7 @@ const Form = ({ setIsFinalStep, responses, setResponses }) => {
 
   return (
     <form 
-      className="content-container w-full lg:w-auto min-w-1/3"
+      className="content-container w-full lg:w-1/2 min-w-1/3"
       onSubmit={handleFormSubmit}
     >
       {renderCurrentPage()}
