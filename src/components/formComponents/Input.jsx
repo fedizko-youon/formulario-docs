@@ -92,7 +92,7 @@ const Input = ({ text, id, type, value, placeholder, onChange, options }) => {
             <fieldset className="flex flex-col gap-4">
                 <p>{text}</p>
                 <input
-                    className="border p-1"
+                    className="border w-full p-1"
                     id={id}
                     type={type}
                     value={value}
