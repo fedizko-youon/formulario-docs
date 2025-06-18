@@ -1,12 +1,28 @@
-# React + Vite
+# Formulário para Auxiliar na Criação de Docuentações ISO
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O projeto é um formulário feito em React.js que resgata as respostas e disponibiliza para download um documento word com a as respostas obtidas.
 
-Currently, two official plugins are available:
+## Como Iniciar o Projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O projeto está acessível em um deploy na vercel através deste link: https://formulario-docs.vercel.app/
 
-## Expanding the ESLint configuration
+Ou se instalar localmente:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Em um terminal, rodar:
+
+```bash
+git clone https://github.com/fedizko-youon/formulario-docs.git
+```
+
+2. Depois instalar as dependências do projeto:
+
+```bash
+npm install
+```
+
+3. Por fim, para rodar o projeto:
+
+```
+npm run dev
+```
+
